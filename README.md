@@ -1,6 +1,7 @@
 # Dotfiles
 
 Portable terminal configuration for WezTerm, Zsh, and Powerlevel10k.
+<img width="1549" height="964" alt="Screenshot 2026-08-07 at 13 32 57" src="https://github.com/user-attachments/assets/6608f3bb-c432-479e-b3e9-f78db3fd5ea4" />
 
 ## Layout
 
