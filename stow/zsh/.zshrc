@@ -64,7 +64,11 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # Aliases
 export CLICOLOR=1
 export LSCOLORS='Exfxcxdxbxegedabagacad'
-alias ls='ls --color'
+alias ls='lsd'
+alias l='lsd -l'
+alias ll='lsd -l'
+alias la='lsd -la'
+alias lt='lsd --tree'
 
 # Shell integrations.
 if command -v fzf >/dev/null 2>&1; then

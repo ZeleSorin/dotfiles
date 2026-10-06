@@ -1,0 +1,72 @@
+onboarding = false
+
+[keys]
+prefix = "§"
+
+[[keys.command]]
+key = "prefix+f"
+type = "shell"
+command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+
+[[keys.command]]
+key = "prefix+shift+f"
+type = "shell"
+command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer"
+
+[[keys.command]]
+key = "prefix+M"
+type = "plugin_action"
+command = "drovr.move-tab"
+description = "move tab to workspace"
+
+[[keys.command]]
+key = "prefix+m"
+type = "plugin_action"
+command = "drovr.move-pane"
+description = "move pane to tab"
+
+[ui]
+agent_panel_sort = "priority"
+
+show_agent_labels_on_pane_borders = true
+
+[ui.sidebar.agents]
+row_gap = 1
+rows = [
+  ["state_icon", { token = "workspace", fg = "#F0F2F5", bold = false, dim = false }, { token = "tab", fg = "#DCE0E6", bold = false, dim = false }],
+  [{ token = "agent", fg = "#B6D1BF", bold = true, dim = false }, "state_text"],
+]
+
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", { token = "workspace", fg = "#F0F2F5", bold = false, dim = false }],
+  [{ token = "branch", fg = "#DCE0E6", bold = false, dim = false }, "git_status"],
+]
+
+[theme]
+name = "vesper"
+auto_switch = false
+
+[theme.custom]
+accent = "#8FAF9A"
+panel_bg = "#15161E"
+surface0 = "#202124"
+surface1 = "#282A2E"
+surface_dim = "#303733"
+overlay0 = "#5F6368"
+overlay1 = "#8A8E95"
+text = "#D4D4D4"
+subtext0 = "#C7CBD3"
+mauve = "#AAA0B8"
+green = "#8FAF9A"
+yellow = "#C8AA6E"
+red = "#C47F88"
+blue = "#9B9B9B"
+teal = "#86A8A0"
+peach = "#B99A78"
+
+[ui.sound]
+enabled = false
+
+[ui.toast]
+delivery = "herdr"

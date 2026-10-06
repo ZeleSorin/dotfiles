@@ -1,0 +1,24 @@
+---
+filetype:
+  dir: 󰉋
+  file: 󰈔
+  executable: 
+  symlink-dir: 
+  symlink-file: 
+
+name:
+  private: 󰉐
+  .git: 
+  downloads: 󰉍
+  dotfiles: 
+  dockerfile: 
+  makefile: 
+
+extension:
+  lua: 
+  zsh: 󱆃
+  rs: 🦀
+  md: 
+  yaml: 
+  yml: 
+  png: 

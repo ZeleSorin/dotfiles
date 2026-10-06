@@ -6,9 +6,11 @@ local config = wezterm.config_builder()
 config.font_size = 16
 config.line_height = 1.5
 config.font = wezterm.font('JetBrainsMono Nerd Font')
+config.underline_thickness = '2px'
+config.cursor_thickness = '1px'
 config.color_scheme = "tokyonight_night"
 local terminal_opacity = 0.87
-local photo_opacity = 0.40
+local photo_opacity = 0.55
 local black_opacity = (terminal_opacity - photo_opacity) / (1 - photo_opacity)
 config.background = {
   {
@@ -19,7 +21,7 @@ config.background = {
   },
   {
     source = {
-      File = wezterm.home_dir .. '/.config/wezterm/background.png',
+      File = wezterm.home_dir .. '/.config/wezterm/tinkerer.png',
     },
     width = 'Cover',
     height = 'Cover',
@@ -38,8 +40,9 @@ config.background = {
 config.colors = {
   background = '#000000',
   foreground = '#d4d4d4',
-  cursor_bg = '#7aa2f7',
-  cursor_border = '#7aa2f7',
+  cursor_bg = '#b8b8b8',
+  cursor_border = '#b8b8b8',
+  split = '#b8b8b8',
   ansi = {
     '#15161e',
     '#f7768e',
@@ -47,7 +50,7 @@ config.colors = {
     '#e0af68',
     '#9b9b9b',
     '#bb9af7',
-    '#7dcfff',
+    '#8FAF9A',
     '#a9b1d6',
   },
   brights = {
@@ -57,7 +60,7 @@ config.colors = {
     '#e0af68',
     '#c5c5c5',
     '#bb9af7',
-    '#7dcfff',
+    '#8FAF9A',
     '#c0caf5',
   },
   tab_bar = {
@@ -66,15 +69,15 @@ config.colors = {
       bg_color = '#44474f',
       fg_color = '#e0e6fa',
       intensity = 'Normal',
-      underline = 'Single',
+      underline = 'None',
       italic = false,
     },
     inactive_tab = {
-      bg_color = '#202124',
+      bg_color = '#282a2e',
       fg_color = '#7a84ad',
     },
     inactive_tab_hover = {
-      bg_color = '#29334d',
+      bg_color = '#32353a',
       fg_color = '#7aa2f7',
       italic = false,
     },
@@ -114,14 +117,31 @@ local function tab_title(tab)
   return tab.active_pane.title
 end
 
-wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
+wezterm.on('format-tab-title', function(tab, tabs, _, _, hover, max_width)
   local number = string.format('%d: ', tab.tab_index + 1)
-  local title_width = math.max(1, max_width - wezterm.column_width(number) - 2)
+  local is_last_tab = tab.tab_index == #tabs - 1
+  local edge_width = is_last_tab and 2 or 1
+  local title_width = math.max(1, max_width - wezterm.column_width(number) - 2 - edge_width)
   local title = wezterm.truncate_right(tab_title(tab), title_width)
   local number_color = tab.is_active and '#ffffff' or '#eef1f7'
   local title_color = tab.is_active and '#e0e6fa' or '#aeb4c2'
+  local background_color = tab.is_active and '#44474f' or '#282a2e'
+  local border_color = tab.is_active and '#b8b8b8' or '#5f6368'
 
-  return {
+  if hover and not tab.is_active then
+    background_color = '#32353a'
+    border_color = '#8a8e95'
+  end
+
+  local left_border_color = border_color
+  if tab.tab_index > 0 and tabs[tab.tab_index].is_active then
+    left_border_color = '#b8b8b8'
+  end
+
+  local elements = {
+    { Background = { Color = background_color } },
+    { Foreground = { Color = left_border_color } },
+    { Text = '▏' },
     { Text = ' ' },
     { Foreground = { Color = number_color } },
     { Attribute = { Intensity = 'Bold' } },
@@ -130,6 +150,13 @@ wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
     { Foreground = { Color = title_color } },
     { Text = title .. ' ' },
   }
+
+  if is_last_tab then
+    table.insert(elements, { Foreground = { Color = border_color } })
+    table.insert(elements, { Text = '▕' })
+  end
+
+  return elements
 end)
 
 -- key bindings
